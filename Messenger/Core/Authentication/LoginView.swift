@@ -15,6 +15,7 @@ struct LoginView: View {
         NavigationStack {
             VStack {
                 Spacer()
+                    .frame(height: 100)
                 
                 // Logo Image
                 Image("Facebook-Messenger-logo-clean")
@@ -84,7 +85,8 @@ struct LoginView: View {
                 //SignIn link
                 
                 NavigationLink {
-                 Text("Sign Up View")
+                    RegistrationView()
+                        .navigationBarBackButtonHidden()
                 } label: {
                     HStack {
                         Text("Dont have an account?")
