@@ -10,6 +10,7 @@ import PhotosUI
 
 struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel = ProfileViewModel()
+    let user: User //user dlya navdestionation
     
     var body: some View {
         VStack {
@@ -23,16 +24,23 @@ struct ProfileView: View {
                             .frame(width: 80, height: 80)
                             .clipShape(Circle())
                     } else {
-                        Image(systemName: "person.circle.fill")
+                        //a zdes uje budet nash photo user
+                        Image(user.profileImageUrl ?? "")
                             .resizable()
+                            .scaledToFill()
                             .frame(width: 80, height: 80)
-                            .foregroundStyle(Color(.systemGray4))
+                            .clipShape(Circle())
                     }
                 }
                 
-                Text("Hakob Ghlijyan")
+                Text(user.fullName)
                     .font(.title2)
                     .fontWeight(.semibold)
+                
+                Text(user.email)
+                    .font(.footnote)
+                    .fontWeight(.light)
+                    .foregroundStyle(.gray)
             }
             //List
             List {
@@ -59,31 +67,11 @@ struct ProfileView: View {
                     }
                 }
                 .foregroundStyle(.red)
-                
-                
             }
-            
-            
         }
-        
-//        LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-//            Section(header: Text("foo") ) {
-//                LazyVStack(spacing: 0, pinnedViews: [.sectionHeaders]) {
-//                    Section (header: Text("bar") ) {
-//                        Text("1")
-//                        Text("2")
-//                    }
-//                    Section (header: Text("baz") ) {
-//                        Text("1")
-//                        Text("2")
-//                    }
-//                }
-//            }
-//        }
-        
     }
 }
 
 #Preview {
-    ProfileView()
+    ProfileView(user: User.mockUser)
 }
