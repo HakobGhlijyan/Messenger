@@ -24,14 +24,14 @@ struct ProfileView: View {
             //List
             List {
                 Section {
-                    ForEach(0...5, id: \.self) { option in
+                    ForEach(SettingsOptionsViewModel.allCases) { option in
                         HStack {
-                            Image(systemName: "bell.circle.fill")
+                            Image(systemName: option.imageName)
                                 .resizable()
                                 .frame(width: 24, height: 24)
-                                .foregroundStyle(Color(.systemGray))
+                                .foregroundStyle(option.imageBackgroundColor)
                             
-                            Text("Notification")
+                            Text(option.title)
                                 .font(.subheadline)
                         }
                     }
