@@ -34,11 +34,12 @@ struct InboxView: View {
                 ToolbarItem(placement: .topBarLeading) {
                     HStack {
                         NavigationLink(value: user) {
-                            Image(user.profileImageUrl ?? "")
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 32, height: 32)
-                                .clipShape(Circle())
+//                            Image(user.profileImageUrl ?? "")
+//                                .resizable()
+//                                .scaledToFill()
+//                                .frame(width: 32, height: 32)
+//                                .clipShape(Circle())
+                            CircleProfileImageView(user: user, size: .xSmall)
                         }
                         Text("Charts")
                             .font(.title)

@@ -25,11 +25,13 @@ struct ProfileView: View {
                             .clipShape(Circle())
                     } else {
                         //a zdes uje budet nash photo user
-                        Image(user.profileImageUrl ?? "")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 80, height: 80)
-                            .clipShape(Circle())
+//                        Image(user.profileImageUrl ?? "")
+//                            .resizable()
+//                            .scaledToFill()
+//                            .frame(width: 80, height: 80)
+//                            .clipShape(Circle())
+                        
+                        CircleProfileImageView(user: user, size: .xLarge)
                     }
                 }
                 
