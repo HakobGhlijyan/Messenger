@@ -22,6 +22,10 @@ struct MessengerApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
+    init() {
+        print("Firebase Connceted")
+        print("Firebase Connceted")
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
