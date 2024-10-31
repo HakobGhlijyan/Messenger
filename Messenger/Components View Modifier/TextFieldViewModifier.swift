@@ -17,3 +17,14 @@ struct TextFieldViewModifier: ViewModifier {
             .cornerRadius(10)
     }
 }
+
+struct TextFieldMessagesViewModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(16)
+            .padding(.trailing, 48)
+            .background(Color(.systemGroupedBackground))
+            .clipShape(Capsule())
+            .font(.subheadline)
+    }
+}
