@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct LoginView: View {
-    @State private var email: String = ""
-    @State private var password: String = ""
+    @StateObject private var viewModel: LoginViewModel = LoginViewModel()
     
     var body: some View {
         NavigationStack {
@@ -26,9 +25,9 @@ struct LoginView: View {
                 
                 //TextField
                 VStack(spacing: 16.0) {
-                    TextField("Email", text: $email)
+                    TextField("Email", text: $viewModel.email)
                         .modifier(TextFieldViewModifier())
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .modifier(TextFieldViewModifier())
                 }
                 
@@ -47,7 +46,11 @@ struct LoginView: View {
                 
                 //Login Button
                 Button {
-                    //action
+                    //async func vizov cherez Task
+                    Task {
+                        try await viewModel.login()
+                    }
+                    
                 } label: {
                     Text("Login")
                         .modifier(ButtonViewModifier())
