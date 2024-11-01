@@ -22,6 +22,7 @@ final class ContentViewModel: ObservableObject {
             .$userSession
             .sink { [weak self] userSessionFromAuthService in   //dobavim weak self -> i ?
                 self?.userSession = userSessionFromAuthService
+                // eto delem v fonovom potoke no ne ukazivaem vernutsya v main dlay ui update
             }
             .store(in: &cancellables)
     }
