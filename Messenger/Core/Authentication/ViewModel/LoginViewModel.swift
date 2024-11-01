@@ -13,6 +13,6 @@ final class LoginViewModel: ObservableObject {
     
     //Vizivaem func iz service v async rejime
     func login() async throws {
-        try await AuthService().logIn(withEmail: email, password: password)
+        try await AuthService.shared.logIn(withEmail: email, password: password)
     }
 }

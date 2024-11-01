@@ -14,6 +14,6 @@ final class RegistrationViewModel: ObservableObject {
     
     //Vizivaem func iz service v async rejime
     func createAccount() async throws {
-        try await AuthService().createUser(withEmail: email, password: password, fullname: fullName)
+        try await AuthService.shared.createUser(withEmail: email, password: password, fullname: fullName)
     }
 }
