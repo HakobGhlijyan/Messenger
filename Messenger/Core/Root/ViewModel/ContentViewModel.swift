@@ -20,9 +20,8 @@ final class ContentViewModel: ObservableObject {
     private func setupSubscribers() {
         AuthService.shared
             .$userSession
-            .sink { [weak self] userSessionFromAuthService in   //dobavim weak self -> i ?
+            .sink { [weak self] userSessionFromAuthService in
                 self?.userSession = userSessionFromAuthService
-                // eto delem v fonovom potoke no ne ukazivaem vernutsya v main dlay ui update
             }
             .store(in: &cancellables)
     }

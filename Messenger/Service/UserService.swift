@@ -36,9 +36,3 @@ final class UserService: ObservableObject {
         print("DEBUG: - Current User: \(String(describing: currentUser))")
     }
 }
-
-/// Tak mi sozdali class kotoriy budet poluchat current user i ego vse data ,
-/// v nem mi proveryaem est li user ,
-/// potom naxodim ego
-/// poluchenogo user decodiruem
-/// i naznachem k nachennu current user , i budem ispolzovat uje etio data

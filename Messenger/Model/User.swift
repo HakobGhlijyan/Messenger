@@ -9,9 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
 
-struct User: Identifiable, Codable, Hashable {
-//    var id = NSUUID().uuidString // eto id nam bolche ne nujno. v firestore est svoy di kotoriy on sozdayot
-    
+struct User: Identifiable, Codable, Hashable {    
     @DocumentID var uid: String?
     var id: String {
         return uid ?? NSUUID().uuidString

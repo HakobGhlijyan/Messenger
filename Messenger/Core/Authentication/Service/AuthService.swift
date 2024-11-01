@@ -17,10 +17,7 @@ import FirebaseStorage
     @Published var userSession: FirebaseAuth.User?
     
     private init() {
-        // userSession ispolzuetsya chtob uznat est li current user ili net . kakoy view otkrit .
         self.userSession = Auth.auth().currentUser
-        // kak mi poluchim info . nachnet vipolnaytsya etot task . poluchenie info o user
-        // a sdes mi v task vizivaem async func kotoraya v sluchae current user naznachit poluchanuyu data
         Task {
             try await UserService.shared.fetchCurrentUser()
         }
@@ -28,9 +25,7 @@ import FirebaseStorage
     }
     
     //MARK: - Section Log In - Sing In - Creating
-    
     //MARK: - createUser
-     //Chtoob vse rabotalo @MainActor dobavim
      @MainActor func createUser(withEmail email: String, password: String, fullname: String) async throws {
         do {
             // make user
@@ -46,7 +41,6 @@ import FirebaseStorage
     }
     
     //MARK: - Log In
-     //Chtoob vse rabotalo @MainActor dobavim
      @MainActor func logIn(withEmail email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
