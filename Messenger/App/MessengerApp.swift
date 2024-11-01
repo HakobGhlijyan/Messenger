@@ -18,8 +18,6 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
 @main
 struct MessengerApp: App {
-    
-    // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {

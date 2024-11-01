@@ -10,10 +10,6 @@ import SwiftUI
 struct InboxRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-//            Image(systemName: "person.circle.fill")
-//                .resizable()
-//                .frame(width: 64, height: 64)
-//                .foregroundStyle(Color(.systemGray4))
             CircleProfileImageView(user: User.mockUser, size: .medium)
             
             VStack(alignment: .leading, spacing: 4) {
@@ -25,7 +21,7 @@ struct InboxRowView: View {
                     .font(.subheadline)
                     .foregroundStyle(.gray)
                     .lineLimit(2)
-                    .frame(maxWidth: UIScreen.main.bounds.width - 100, alignment: .leading) // for first line is not in time section
+                    .frame(maxWidth: UIScreen.main.bounds.width - 100, alignment: .leading)
             }
             
             HStack {

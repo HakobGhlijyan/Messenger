@@ -11,7 +11,6 @@ final class LoginViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     
-    //Vizivaem func iz service v async rejime
     func login() async throws {
         try await AuthService.shared.logIn(withEmail: email, password: password)
     }

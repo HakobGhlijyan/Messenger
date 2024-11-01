@@ -16,14 +16,12 @@ struct LoginView: View {
                 Spacer()
                     .frame(height: 100)
                 
-                // Logo Image
                 Image("Facebook-Messenger-logo-clean")
                     .resizable()
                     .scaledToFit()
                     .frame(width: 120, height: 120)
                     .padding()
                 
-                //TextField
                 VStack(spacing: 16.0) {
                     TextField("Email", text: $viewModel.email)
                         .modifier(TextFieldViewModifier())
@@ -31,8 +29,6 @@ struct LoginView: View {
                         .modifier(TextFieldViewModifier())
                 }
                 
-                
-                //Forgot Password
                 Button {
                     //action
                 } label: {
@@ -44,20 +40,16 @@ struct LoginView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 
-                //Login Button
                 Button {
-                    //async func vizov cherez Task
                     Task {
                         try await viewModel.login()
                     }
-                    
                 } label: {
                     Text("Login")
                         .modifier(ButtonViewModifier())
                 }
                 .padding(.vertical)
                 
-                //Divider "OR"
                 HStack {
                     Rectangle()
                         .frame(width: (UIScreen.main.bounds.width / 2) - 40 , height: 0.5)
@@ -66,9 +58,7 @@ struct LoginView: View {
                         .frame(width: (UIScreen.main.bounds.width / 2) - 40 , height: 0.5)
                 }
                 .foregroundStyle(.gray)
-                
-                //Facebook Login
-                
+                                
                 HStack {
                     Image("Facebook-logo-clean")
                         .resizable()
@@ -84,9 +74,7 @@ struct LoginView: View {
                 Spacer()
                 
                 Divider()
-                
-                //SignIn link
-                
+                                
                 NavigationLink {
                     RegistrationView()
                         .navigationBarBackButtonHidden()

@@ -17,14 +17,12 @@ struct RegistrationView: View {
             Spacer()
                 .frame(height: 100)
             
-            // Logo Image
             Image("Facebook-Messenger-logo-clean")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 120, height: 120)
                 .padding()
             
-            //TextField
             VStack(spacing: 16.0) {
                 TextField("Full Name", text: $viewModel.fullName)
                     .modifier(TextFieldViewModifier())
@@ -36,7 +34,6 @@ struct RegistrationView: View {
                     .modifier(TextFieldViewModifier())
             }
             
-            //Sign Up Button
             Button {
                 Task {
                     try await viewModel.createAccount()
@@ -49,7 +46,6 @@ struct RegistrationView: View {
             
             Spacer()
             
-            //SignIn link
             Divider()
             
             Button {

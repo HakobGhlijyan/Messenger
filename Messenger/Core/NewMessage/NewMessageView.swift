@@ -27,10 +27,6 @@ struct NewMessageView: View {
                         ForEach(0...10, id: \.self) { user in
                             VStack {
                                 HStack {
-//                                    Image(systemName: "person.crop.circle")
-//                                        .resizable()
-//                                        .foregroundStyle(Color(.systemGray4))
-//                                        .frame(width: 32, height: 32)
                                     CircleProfileImageView(user: User.mockUser, size: .small)
                                     
                                     Text("Hakob Ghlijyan")

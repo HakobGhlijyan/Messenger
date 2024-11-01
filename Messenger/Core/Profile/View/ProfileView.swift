@@ -10,11 +10,10 @@ import PhotosUI
 
 struct ProfileView: View {
     @StateObject private var viewModel: ProfileViewModel = ProfileViewModel()
-    let user: User //user dlya navdestionation
+    let user: User
     
     var body: some View {
         VStack {
-            //Header
             VStack {
                 PhotosPicker(selection: $viewModel.selectedItem) {
                     if let profileImage = viewModel.profileImage {
@@ -24,13 +23,6 @@ struct ProfileView: View {
                             .frame(width: 80, height: 80)
                             .clipShape(Circle())
                     } else {
-                        //a zdes uje budet nash photo user
-//                        Image(user.profileImageUrl ?? "")
-//                            .resizable()
-//                            .scaledToFill()
-//                            .frame(width: 80, height: 80)
-//                            .clipShape(Circle())
-                        
                         CircleProfileImageView(user: user, size: .xLarge)
                     }
                 }

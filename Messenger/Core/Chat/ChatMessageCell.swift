@@ -20,17 +20,6 @@ struct ChatMessageCell: View {
                     .padding(12)
                     .background(Color(.systemBlue))
                     .foregroundStyle(.white)
-                //1
-//                    .clipShape(
-//                        .rect(
-//                            topLeadingRadius: 12,
-//                            bottomLeadingRadius: 12,
-//                            bottomTrailingRadius: 0,
-//                            topTrailingRadius: 12,
-//                            style: .continuous
-//                        )
-//                    )
-                //2
                     .clipShape(ChatBubble(isFromeCurrentUser: isFromeCurrentUser))
                     .frame(maxWidth: UIScreen.main.bounds.width / 1.5 , alignment: .trailing)
             } else {
@@ -42,17 +31,6 @@ struct ChatMessageCell: View {
                         .padding(12)
                         .background(Color(.systemGray5))
                         .foregroundStyle(.black)
-                    //1
-//                        .clipShape(
-//                            .rect(
-//                                topLeadingRadius: 12,
-//                                bottomLeadingRadius: 0,
-//                                bottomTrailingRadius: 12,
-//                                topTrailingRadius: 12,
-//                                style: .continuous
-//                            )
-//                        )
-                    //2
                         .clipShape(ChatBubble(isFromeCurrentUser: isFromeCurrentUser))
                         .frame(maxWidth: UIScreen.main.bounds.width / 1.75 , alignment: .leading)
                     

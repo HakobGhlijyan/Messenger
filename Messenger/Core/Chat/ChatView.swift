@@ -13,7 +13,6 @@ struct ChatView: View {
     var body: some View {
         VStack {
             ScrollView {
-                //Header
                 VStack {
                     CircleProfileImageView(user: User.mockUser, size: .xLarge)
                     
@@ -28,7 +27,6 @@ struct ChatView: View {
                     }
                 }
                 
-                //Messages
                 ForEach(0 ..< 15, id: \.self) { message in
                     ChatMessageCell(isFromeCurrentUser: Bool.random())
                 }
@@ -36,11 +34,7 @@ struct ChatView: View {
             
             Spacer()
             
-            //Messages input
             ZStack(alignment: .trailing) {
-                //                TextField("Message...", text: $message)
-                //                    .modifier(TextFieldMessagesViewModifier())
-                
                 TextField("Message...", text: $message, axis: .vertical)
                     .modifier(TextFieldMessagesViewModifier())
                 
