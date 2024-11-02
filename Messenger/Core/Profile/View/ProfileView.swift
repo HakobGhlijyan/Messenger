@@ -36,7 +36,7 @@ struct ProfileView: View {
                     .fontWeight(.light)
                     .foregroundStyle(.gray)
             }
-            //List
+            
             List {
                 Section {
                     ForEach(SettingsOptionsViewModel.allCases) { option in
