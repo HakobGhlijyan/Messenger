@@ -11,6 +11,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
+@MainActor
 final class UserService: ObservableObject {
     static let shared = UserService()
     
