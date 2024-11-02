@@ -15,6 +15,8 @@ struct TextFieldViewModifier: ViewModifier {
             .frame(width: 360)
             .background(Color(.systemGray6))
             .cornerRadius(10)
+            .textInputAutocapitalization(.never)
+            .autocorrectionDisabled()
     }
 }
 

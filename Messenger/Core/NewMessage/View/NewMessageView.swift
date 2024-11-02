@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct NewMessageView: View {
+    @StateObject private var viewModel: NewMessageViewModel = NewMessageViewModel()
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -24,12 +26,12 @@ struct NewMessageView: View {
                         .padding()
                     
                     if searchText.isEmpty {
-                        ForEach(0...10, id: \.self) { user in
+                        ForEach(viewModel.users) { user in
                             VStack {
                                 HStack {
-                                    CircleProfileImageView(user: User.mockUser, size: .small)
+                                    CircleProfileImageView(user: user, size: .small)
                                     
-                                    Text("Hakob Ghlijyan")
+                                    Text(user.fullName)
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                     

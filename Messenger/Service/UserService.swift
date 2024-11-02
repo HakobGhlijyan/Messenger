@@ -36,4 +36,29 @@ final class UserService: ObservableObject {
         
         print("DEBUG: - Current User: \(String(describing: currentUser))")
     }
+    
+    // Fetch all User
+    static func fetchAllUsers() async throws -> [User] {
+        //1 version
+        /*
+         let snapshot = try await Firestore          // obrochaemsya k data.. k firestore , k ego users i k vsem ego documentam
+             .firestore()                            // tak mi poluchim doumenti , i ostanetsya iz nix vsyat user ov
+             .collection("users")
+             .getDocuments()
+         
+         let users = snapshot                        // sdes mi i sozdadim vsex users po ix documentov
+             .documents
+         //1
+             .compactMap { userData in                         // Tak mi proxodim po users i try? probuya sobrat vsex
+                 try? userData.data(as: User.self)             // poluchya userData mi data(as: ) decodiruem ix danie
+             }                                                 // compact map nam vernet array users i ego vernem
+         //2
+ //            .compactMap( { try? $0.data(as: User.self) } )
+         
+         return users
+         */
+        //2 2 line
+        let snapshot = try await Firestore.firestore().collection("users").getDocuments()
+        return snapshot.documents.compactMap( { try? $0.data(as: User.self) } )
+    }
 }

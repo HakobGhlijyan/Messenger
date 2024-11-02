@@ -12,21 +12,24 @@ import FirebaseFirestore
 import FirebaseStorage
 
 //MARK: - All func conect and work is async await
- class AuthService {
+class AuthService {
     static let shared = AuthService()
     @Published var userSession: FirebaseAuth.User?
     
     private init() {
         self.userSession = Auth.auth().currentUser
-        Task {
-            try await UserService.shared.fetchCurrentUser()
-        }
+//        Task { try await UserService.shared.fetchCurrentUser() }
+        
+        // SDES MI POLUCHAEM USER INFO , NO ON RABOTEET TOLKO PRI INIT... NUJO SDELAT TK chTOb KOGA ZAXODIT DRUGOY USER SRAZU POLUCHAT EGO DATA
+        // VMESTO ETOY STROKI... ->
+        loadCurrentUserData()
+        
         print("DEBUD: User id for session: \(String(describing: userSession?.uid))")
     }
     
     //MARK: - Section Log In - Sing In - Creating
     //MARK: - createUser
-     @MainActor func createUser(withEmail email: String, password: String, fullname: String) async throws {
+    @MainActor func createUser(withEmail email: String, password: String, fullname: String) async throws {
         do {
             // make user
             let result = try await Auth.auth().createUser(withEmail: email, password: password)
@@ -34,6 +37,10 @@ import FirebaseStorage
             self.userSession = result.user
             //upload user data in firestore
             try await self.uploadUserData(email: email, fullName: fullname, id: result.user.uid)
+            
+            // ZDES TOJE POLUCHIM DATA USER
+            loadCurrentUserData()
+            
         } catch {
             print("DEBUG: - Failed Create User, error: \(error.localizedDescription)")
         }
@@ -41,10 +48,14 @@ import FirebaseStorage
     }
     
     //MARK: - Log In
-     @MainActor func logIn(withEmail email: String, password: String) async throws {
+    @MainActor func logIn(withEmail email: String, password: String) async throws {
         do {
             let result = try await Auth.auth().signIn(withEmail: email, password: password)
             self.userSession = result.user
+            
+            // ZDES TOJE POLUCHIM DATA USER
+            loadCurrentUserData()
+            
         } catch {
             print("DEBUG: - Failed SignIn User, error: \(error.localizedDescription)")
         }
@@ -52,10 +63,14 @@ import FirebaseStorage
     }
     
     //MARK: - signOut
-    func signOut() {
+    @MainActor func signOut() {
         do {
             try Auth.auth().signOut()
-            self.userSession = nil   
+            self.userSession = nil
+            
+            //A TAKJE CHTOB UBEDITSYA CHTO NE OSTALOS DATA OT DRUGORO USER , UDALIM USERDATA IS userservice -> current user sdelaem nil
+            UserService.shared.currentUser = nil
+            
         } catch {
             print("DEBUD: Failure signOut, error: \(error.localizedDescription)")
         }
@@ -79,6 +94,10 @@ import FirebaseStorage
             .setData(encodeduser)
     }
     
+    //MARK: - load Current user data
+    private func loadCurrentUserData() {
+        Task { try await UserService.shared.fetchCurrentUser() }
+    }
 }
 
 // for encode data , but use firestore encoder
