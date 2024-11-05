@@ -80,9 +80,13 @@ struct ChatView: View {
                             .foregroundStyle(.gray)
                     }
                 }
-                
-                ForEach(0 ..< 15, id: \.self) { message in
-                    ChatMessageCell(isFromeCurrentUser: Bool.random())
+                //Fack data
+//                ForEach(0 ..< 15, id: \.self) { message in
+//                    ChatMessageCell(isFromeCurrentUser: Bool.random())
+//                }
+                //real data
+                ForEach(viewModel.messages) { message in
+                    ChatMessageCell(message: message)
                 }
             }
             

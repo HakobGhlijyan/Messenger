@@ -24,7 +24,7 @@ struct Message: Identifiable, Codable, Hashable {
     
     //
     let messageText: String
-    let timestamp: Date                     //Timestamp   // change for Date
+    let timestamp: Date                     
     
     //User
     var user: User?
@@ -34,7 +34,7 @@ struct Message: Identifiable, Codable, Hashable {
         return fromId == Auth.auth().currentUser?.uid ? toId : fromId
     }
     
-    // logic for current user
+    // logic for current user , esli v masive soobsheniy po id message budet raven current user , to budet sinim...
     var isfromeCurrentUser: Bool {
         return fromId == Auth.auth().currentUser?.uid
     }

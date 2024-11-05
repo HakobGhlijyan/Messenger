@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ChatMessageCell: View {
-    let isFromeCurrentUser: Bool
+    let message: Message // all messeage for ui view
+    private var isFromeCurrentUser: Bool {
+        return message.isfromeCurrentUser
+    }
     
     var body: some View {
         HStack {
             if isFromeCurrentUser {
                 Spacer()
                 
-                Text("This is a test message for new is longer message. let's see how it looks!")
+                Text(message.messageText)
                     .font(.subheadline)
                     .padding(12)
                     .background(Color(.systemBlue))
@@ -26,7 +29,7 @@ struct ChatMessageCell: View {
                 HStack(alignment: .bottom, spacing: 8.0) {
                     CircleProfileImageView(user: User.mockUser, size: .xxSmall)
                     
-                    Text("This is a test message for new!")
+                    Text(message.messageText)
                         .font(.subheadline)
                         .padding(12)
                         .background(Color(.systemGray5))
@@ -42,9 +45,52 @@ struct ChatMessageCell: View {
     }
 }
 
-#Preview {
-    VStack {
-        ChatMessageCell(isFromeCurrentUser: true)
-        ChatMessageCell(isFromeCurrentUser: false)
-    }
-}
+
+//for feck data
+/*
+ 
+ 
+ struct ChatMessageCell: View {
+     let isFromeCurrentUser: Bool
+     
+     var body: some View {
+         HStack {
+             if isFromeCurrentUser {
+                 Spacer()
+                 
+                 Text("This is a test message for new is longer message. let's see how it looks!")
+                     .font(.subheadline)
+                     .padding(12)
+                     .background(Color(.systemBlue))
+                     .foregroundStyle(.white)
+                     .clipShape(ChatBubble(isFromeCurrentUser: isFromeCurrentUser))
+                     .frame(maxWidth: UIScreen.main.bounds.width / 1.5 , alignment: .trailing)
+             } else {
+                 HStack(alignment: .bottom, spacing: 8.0) {
+                     CircleProfileImageView(user: User.mockUser, size: .xxSmall)
+                     
+                     Text("This is a test message for new!")
+                         .font(.subheadline)
+                         .padding(12)
+                         .background(Color(.systemGray5))
+                         .foregroundStyle(.black)
+                         .clipShape(ChatBubble(isFromeCurrentUser: isFromeCurrentUser))
+                         .frame(maxWidth: UIScreen.main.bounds.width / 1.75 , alignment: .leading)
+                     
+                     Spacer()
+                 }
+             }
+         }
+         .padding(.horizontal, 8)
+     }
+ }
+
+ #Preview {
+     VStack {
+         ChatMessageCell(isFromeCurrentUser: true)
+         ChatMessageCell(isFromeCurrentUser: false)
+     }
+ }
+
+ 
+ */
