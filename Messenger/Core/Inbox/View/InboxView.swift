@@ -30,15 +30,12 @@ struct InboxView: View {
                 .listStyle(.plain)
                 .frame(height: UIScreen.main.bounds.height - 120)
             }
-            //Pri vibore stroki s user v onchange , toest ori ismenenii znacheniya selected user , mi otkriem view chat
             .onChange(of: selectedUser, { oldValue, newValue in
                 showChat = newValue != nil
-                // pri izmenenii selected user showchat stanet true eli on ne nil.
             })
             .navigationDestination(for: User.self, destination: { user in
                 ProfileView(user: user)
             })
-            //for open user chat view
             .navigationDestination(isPresented: $showChat, destination: {
                 if let user = selectedUser {
                     ChatView(user: user)

@@ -29,24 +29,6 @@ struct NewMessageView: View {
                     
                     if searchText.isEmpty {
                         ForEach(viewModel.users) { user in
-                            // user row
-                            /*
-                             VStack {
-                                 HStack {
-                                     CircleProfileImageView(user: user, size: .small)
-                                     
-                                     Text(user.fullName)
-                                         .font(.subheadline)
-                                         .fontWeight(.semibold)
-                                     
-                                     Spacer()
-                                 }
-                                 .padding(.leading)
-                                 
-                                 Divider()
-                                     .padding(.leading, 55)
-                             }
-                             */
                             userRowLayer(user: user)
                                 .onTapGesture {
                                     selectedUser = user

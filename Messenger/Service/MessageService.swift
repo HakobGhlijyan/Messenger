@@ -42,51 +42,23 @@ struct MessageService {
         chatPartnerRef.document(messageID).setData(messageData)
     }
     
-    // func kororoy budem poluchat vse message kotorie est u user ..
-    // on budet v ivde s escaping
     static func observeMessages(chatPartner: User, completion: @escaping ( [Message]) -> Void ) {
-        // 1. c User id
         guard let currentUID = Auth.auth().currentUser?.uid else { return }
-        //2. sdes dobavim ego id , vmesto polusheniya tolko id
         let chatPartnerUID = chatPartner.id
-        //3. Zapros v DB
-        let query = messageCollection                       // zapros k DB
-            .document(currentUID)                           // k doc user po id
-            .collection(chatPartnerUID)                     // k ego collection po id sobisednica
-            .order(by: "timestamp", descending: false)      // Sortirovka po vremeni , i v obratnom poryadke -> false
-        // 4. poluchenie danix soobcheniya momnetalno , a esli bilo bi async await to eto bilo bi ne srazu a v ruchnuyu.
-        // podpisivaemsya k sluchatelu ... kotoriy budet vsegda sledit za dobaleniem soobsheniy
-//        query.addSnapshotListener(<#T##listener: (QuerySnapshot?, (any Error)?) -> Void##(QuerySnapshot?, (any Error)?) -> Void#>)
-//        query.addSnapshotListener { <#QuerySnapshot?#>, <#(any Error)?#> in
-//            <#code#>
-//        }
+        let query = messageCollection
+            .document(currentUID)
+            .collection(chatPartnerUID)
+            .order(by: "timestamp", descending: false)
+
         query.addSnapshotListener { snapshot, _ in
-            // 5. prosluchivaem vse add -> dobavlenie message
             guard let changes = snapshot?.documentChanges.filter( { $0.type == .added } ) else { return }
-            //6. Arrray messenge...  cherez compact map mi probuem try , potomu chri data as s throw error, i preobrazuem v tip message
             var messages = changes.compactMap( { try? $0.document.data(as: Message.self) } )
-            //proydemsya po masivu soobshenoiy
-            // v kororom est index ego i samo soobshenie , enumerated kotory sdelaet ego tipa Int i String ( 0 , "message ) , chtob mokno bilo nasnachit im
-            // 7. Pomenyame na user vmesto id chtob poluchit vse danie
             for (index, message) in messages.enumerated() where !message.isfromeCurrentUser {
-                // ili -> !message.isFromCurrentUser  , ili  message.fromId != currentUID
                 messages[index].user = chatPartner
             }
-        //8.
             completion(messages)
         }
     }
-    
-    /*
-     1. poluchaem id current user a
-     2. poluchaem id user kotormu chlem message
-     3. delaem zapros
-     4. pluchaem danie novie message s pomochyu sluchatelya nemedlenno
-     5. ubejdaemsya chro poluchaem tolko novie add message
-     6. componuem soobsheniya po titu i decodiruem
-     7. proxodya po poluchenomu masivu numeruem i nasnachem po indexu user am
-     8. vozrochaem array
-     */
 }
 
 //MARK: - Ex
@@ -142,3 +114,51 @@ struct MessageService {
  */
 
 //MARK: - Ex 2
+/*
+ 
+ // func kororoy budem poluchat vse message kotorie est u user ..
+ // on budet v ivde s escaping
+ static func observeMessages(chatPartner: User, completion: @escaping ( [Message]) -> Void ) {
+     // 1. c User id
+     guard let currentUID = Auth.auth().currentUser?.uid else { return }
+     //2. sdes dobavim ego id , vmesto polusheniya tolko id
+     let chatPartnerUID = chatPartner.id
+     //3. Zapros v DB
+     let query = messageCollection                       // zapros k DB
+         .document(currentUID)                           // k doc user po id
+         .collection(chatPartnerUID)                     // k ego collection po id sobisednica
+         .order(by: "timestamp", descending: false)      // Sortirovka po vremeni , i v obratnom poryadke -> false
+     // 4. poluchenie danix soobcheniya momnetalno , a esli bilo bi async await to eto bilo bi ne srazu a v ruchnuyu.
+     // podpisivaemsya k sluchatelu ... kotoriy budet vsegda sledit za dobaleniem soobsheniy
+//        query.addSnapshotListener(<#T##listener: (QuerySnapshot?, (any Error)?) -> Void##(QuerySnapshot?, (any Error)?) -> Void#>)
+//        query.addSnapshotListener { <#QuerySnapshot?#>, <#(any Error)?#> in
+//            <#code#>
+//        }
+     query.addSnapshotListener { snapshot, _ in
+         // 5. prosluchivaem vse add -> dobavlenie message
+         guard let changes = snapshot?.documentChanges.filter( { $0.type == .added } ) else { return }
+         //6. Arrray messenge...  cherez compact map mi probuem try , potomu chri data as s throw error, i preobrazuem v tip message
+         var messages = changes.compactMap( { try? $0.document.data(as: Message.self) } )
+         //proydemsya po masivu soobshenoiy
+         // v kororom est index ego i samo soobshenie , enumerated kotory sdelaet ego tipa Int i String ( 0 , "message ) , chtob mokno bilo nasnachit im
+         // 7. Pomenyame na user vmesto id chtob poluchit vse danie
+         for (index, message) in messages.enumerated() where !message.isfromeCurrentUser {
+             // ili -> !message.isFromCurrentUser  , ili  message.fromId != currentUID
+             messages[index].user = chatPartner
+         }
+     //8.
+         completion(messages)
+     }
+ }
+ 
+ /*
+  1. poluchaem id current user a
+  2. poluchaem id user kotormu chlem message
+  3. delaem zapros
+  4. pluchaem danie novie message s pomochyu sluchatelya nemedlenno
+  5. ubejdaemsya chro poluchaem tolko novie add message
+  6. componuem soobsheniya po titu i decodiruem
+  7. proxodya po poluchenomu masivu numeruem i nasnachem po indexu user am
+  8. vozrochaem array
+  */
+ */
