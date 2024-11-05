@@ -12,6 +12,8 @@ struct NewMessageView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var searchText = ""
     
+    @Binding var selectedUser: User?
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -27,21 +29,30 @@ struct NewMessageView: View {
                     
                     if searchText.isEmpty {
                         ForEach(viewModel.users) { user in
-                            VStack {
-                                HStack {
-                                    CircleProfileImageView(user: user, size: .small)
-                                    
-                                    Text(user.fullName)
-                                        .font(.subheadline)
-                                        .fontWeight(.semibold)
-                                    
-                                    Spacer()
+                            // user row
+                            /*
+                             VStack {
+                                 HStack {
+                                     CircleProfileImageView(user: user, size: .small)
+                                     
+                                     Text(user.fullName)
+                                         .font(.subheadline)
+                                         .fontWeight(.semibold)
+                                     
+                                     Spacer()
+                                 }
+                                 .padding(.leading)
+                                 
+                                 Divider()
+                                     .padding(.leading, 55)
+                             }
+                             */
+                            userRowLayer(user: user)
+                                .onTapGesture {
+                                    selectedUser = user
+                                    dismiss()
                                 }
-                                .padding(.leading)
-                                
-                                Divider()
-                                    .padding(.leading, 55)
-                            }
+                            
                         }
                     }
                 }
@@ -59,8 +70,29 @@ struct NewMessageView: View {
             }
         }
     }
+    
+    @ViewBuilder
+    private func userRowLayer(user: User) -> some View {
+        VStack {
+            HStack {
+                CircleProfileImageView(user: user, size: .small)
+                
+                Text(user.fullName)
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                
+                Spacer()
+            }
+            .padding(.leading)
+            
+            Divider()
+                .padding(.leading, 55)
+        }
+    }
+    
+    
 }
 
 #Preview {
-    NewMessageView()
+    NewMessageView(selectedUser: .constant(User.mockUser))
 }
