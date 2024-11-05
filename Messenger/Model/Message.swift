@@ -24,7 +24,7 @@ struct Message: Identifiable, Codable, Hashable {
     
     //
     let messageText: String
-    let timestamp: Timestamp
+    let timestamp: Date                     //Timestamp   // change for Date
     
     //User
     var user: User?

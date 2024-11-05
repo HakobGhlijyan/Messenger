@@ -33,7 +33,7 @@ struct MessageService {
             fromId: currentUID,
             toId: chatPartnerUID,
             messageText: messageText,
-            timestamp: Timestamp()
+            timestamp:  Date()                      //Timestamp   // change for Date
         )
 
         guard let messageData = try? Firestore.Encoder().encode(message) else { return }
