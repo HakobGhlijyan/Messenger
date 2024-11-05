@@ -55,8 +55,14 @@ import SwiftUI
  }
  */
 struct ChatView: View {
-    @State private var message: String = ""
+    @StateObject private var viewModel: ChatViewModel // inicializirivat budem v init ( vnedrenie zavisimosi)
     let user: User
+    
+    init(user: User) {
+        self._viewModel = StateObject(wrappedValue: ChatViewModel(user: user))
+        // v nego nujno obyornutoe znachenie s observesion svoystvom kak viewmodel
+        self.user = user
+    }
     
     var body: some View {
         VStack {
@@ -83,11 +89,12 @@ struct ChatView: View {
             Spacer()
             
             ZStack(alignment: .trailing) {
-                TextField("Message...", text: $message, axis: .vertical)
+                TextField("Message...", text: $viewModel.messageText, axis: .vertical)
                     .modifier(TextFieldMessagesViewModifier())
                 
                 Button {
-                    
+                    viewModel.sendMessage()
+                    viewModel.messageText = ""
                 } label: {
                     Text("Send").fontWeight(.semibold)
                         .padding(.horizontal)
