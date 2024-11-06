@@ -11,55 +11,58 @@ import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
-struct MessageService {
-    static let messageCollection = Firestore.firestore().collection("messages")
-    
-    static func sendMessage(_ messageText: String, toUser user: User) {
-        guard let currentUID = Auth.auth().currentUser?.uid else { return }
-        let chatPartnerUID = user.id
-        let currentUserRef = messageCollection
-            .document(currentUID)
-            .collection(chatPartnerUID)
-            .document()
-        
-        let chatPartnerRef = messageCollection
-            .document(chatPartnerUID)
-            .collection(currentUID)
+// code -> refactor send in chatservice
+/*
+ struct MessageService {
+     static let messageCollection = Firestore.firestore().collection("messages")
+     
+     static func sendMessage(_ messageText: String, toUser user: User) {
+         guard let currentUID = Auth.auth().currentUser?.uid else { return }
+         let chatPartnerUID = user.id
+         let currentUserRef = messageCollection
+             .document(currentUID)
+             .collection(chatPartnerUID)
+             .document()
+         
+         let chatPartnerRef = messageCollection
+             .document(chatPartnerUID)
+             .collection(currentUID)
 
-        let messageID = currentUserRef.documentID
-        
-        let message = Message(
-            messageId: messageID,
-            fromId: currentUID,
-            toId: chatPartnerUID,
-            messageText: messageText,
-            timestamp:  Date()                    
-        )
+         let messageID = currentUserRef.documentID
+         
+         let message = Message(
+             messageId: messageID,
+             fromId: currentUID,
+             toId: chatPartnerUID,
+             messageText: messageText,
+             timestamp:  Date()
+         )
 
-        guard let messageData = try? Firestore.Encoder().encode(message) else { return }
+         guard let messageData = try? Firestore.Encoder().encode(message) else { return }
 
-        currentUserRef.setData(messageData)
-        chatPartnerRef.document(messageID).setData(messageData)
-    }
-    
-    static func observeMessages(chatPartner: User, completion: @escaping ( [Message]) -> Void ) {
-        guard let currentUID = Auth.auth().currentUser?.uid else { return }
-        let chatPartnerUID = chatPartner.id
-        let query = messageCollection
-            .document(currentUID)
-            .collection(chatPartnerUID)
-            .order(by: "timestamp", descending: false)
+         currentUserRef.setData(messageData)
+         chatPartnerRef.document(messageID).setData(messageData)
+     }
+     
+     static func observeMessages(chatPartner: User, completion: @escaping ( [Message]) -> Void ) {
+         guard let currentUID = Auth.auth().currentUser?.uid else { return }
+         let chatPartnerUID = chatPartner.id
+         let query = messageCollection
+             .document(currentUID)
+             .collection(chatPartnerUID)
+             .order(by: "timestamp", descending: false)
 
-        query.addSnapshotListener { snapshot, _ in
-            guard let changes = snapshot?.documentChanges.filter( { $0.type == .added } ) else { return }
-            var messages = changes.compactMap( { try? $0.document.data(as: Message.self) } )
-            for (index, message) in messages.enumerated() where !message.isfromeCurrentUser {
-                messages[index].user = chatPartner
-            }
-            completion(messages)
-        }
-    }
-}
+         query.addSnapshotListener { snapshot, _ in
+             guard let changes = snapshot?.documentChanges.filter( { $0.type == .added } ) else { return }
+             var messages = changes.compactMap( { try? $0.document.data(as: Message.self) } )
+             for (index, message) in messages.enumerated() where !message.isfromeCurrentUser {
+                 messages[index].user = chatPartner
+             }
+             completion(messages)
+         }
+     }
+ }
+ */
 
 //MARK: - Ex
 /*
