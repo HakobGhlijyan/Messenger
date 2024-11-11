@@ -18,6 +18,12 @@ struct User: Identifiable, Codable, Hashable {
     let fullName: String
     let email: String
     let profileImageUrl: String?
+    
+    var firstName: String {
+        let formater = PersonNameComponentsFormatter()
+        let components = formater.personNameComponents(from: fullName)
+        return components?.givenName ?? fullName
+    }
 }
 
 extension User {

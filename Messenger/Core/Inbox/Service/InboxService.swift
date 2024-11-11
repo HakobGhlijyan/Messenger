@@ -30,3 +30,9 @@ class InboxService {
     }
 }
 
+//private func fetchUsers() async throws {
+//    guard let currentUID = Auth.auth().currentUser?.uid else { return }
+//    let users = try await UserService.fetchAllUsers(limit: 6)
+//    self.users = users.filter( { $0.id != currentUID })   //sdes mi otsortiruem user ov chtom to kotoriy currrent ne pokazival v verxu
+//}
+
