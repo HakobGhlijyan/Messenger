@@ -20,7 +20,7 @@ struct InboxView: View {
     var body: some View {
         NavigationStack {
             List {
-                ActiveNowView()                                                       //7 kak sdes , i nem ego vew est nav link
+                ActiveNowView()
                     .listRowSeparator(.hidden)
                     .listRowInsets(EdgeInsets())
                     .padding(.vertical)
@@ -47,16 +47,13 @@ struct InboxView: View {
                     ChatView(user: user)
                 }
             })
-//            .navigationDestination(for: User.self, destination: { user in         //1 eto bilo do togo kak dobavil route
-//                ProfileView(user: user)
-//            })
-            .navigationDestination(for: Route.self, destination: { route in           //2 eto teper budet route chtob cherez switch mi ponili k komu oerexodim
-                switch route {                                                        //3 pereberaem route , tam 2 varianta ,
-                case .profile(let user):                                              //4 1 vrian esli profile path budet kak v toolbat nav link tam
-                    ProfileView(user: user)                                           //5 NavigationLink(value: Route.profile(user)) -> pereydet k profilu usera a
-                case .chatView(let user):                                             //6 a esli chat to pereydem k chat view
-                    ChatView(user: user)                                              //7 v cahte kak v list NavigationLink(value: Route.chatView(user)) {  v active now view
-                }                                                                     // TAK MI BUDEM ZNAT KUDA PEREXODIT ISPOLZUYA USER KAK VALUE
+            .navigationDestination(for: Route.self, destination: { route in
+                switch route {
+                case .profile(let user):
+                    ProfileView(user: user)
+                case .chatView(let user):
+                    ChatView(user: user)
+                }
             })
             .navigationDestination(isPresented: $showChat, destination: {
                 if let user = selectedUser {
